@@ -11,12 +11,14 @@ global : {
 }
 EOF
 
+REPO="${PWD}/blackwater-puppet"
+
 rsync \
   --rsync-path=/usr/bin/openrsync \
-  -arv puppet buhman@blackwater.lan:~
+  -arv "$REPO" buhman@blackwater.lan:~
 
 puppet apply \
-  --modulepath=./puppet/modules \
-  --codedir=./puppet/code \
+  --modulepath="${REPO}/modules" \
+  --codedir="${REPO}/code" \
   --environment=rv \
-  -e "include network"
+  "${REPO}/code/environments/rv/manifests/site.pp"

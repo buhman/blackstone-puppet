@@ -1,0 +1,17 @@
+<%- | String $host | -%>
+
+authority letsencrypt {
+	api url "https://acme-v02.api.letsencrypt.org/directory"
+	account key "/etc/acme/letsencrypt-privkey.pem"
+}
+
+authority letsencrypt-staging {
+	api url "https://acme-staging-v02.api.letsencrypt.org/directory"
+	account key "/etc/acme/letsencrypt-staging-privkey.pem"
+}
+
+domain <%= $host %> {
+	domain key "/etc/ssl/private/<%= $host %>.key"
+	domain full chain certificate "/etc/ssl/<%= $host %>.fullchain.pem"
+	sign with letsencrypt
+}

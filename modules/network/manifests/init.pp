@@ -14,7 +14,7 @@ class network (
   String $domain,
   Array[String] $nameservers,
 ) {
-  $interface = "dwge0"
+  $interface = 'dwge0'
 
   $hostname_if = @("IF"/L)
   inet ${inet_addr} ${inet_mask} ${inet_brd}

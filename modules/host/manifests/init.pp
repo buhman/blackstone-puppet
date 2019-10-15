@@ -6,12 +6,12 @@ class host (
   String $buhman_key,
 ) {
   user { 'root':
-    ensure => present,
+    ensure   => present,
     password => $root_hash,
   }
 
   user { 'buhman':
-    ensure => present,
+    ensure   => present,
     password => $buhman_hash,
   }
 
@@ -25,17 +25,17 @@ class host (
   $fqdn = "${hostname}.${domain}"
 
   file { 'hostname':
-    path => '/etc/myname',
+    path    => '/etc/myname',
     content => "${fqdn}\n",
-    owner => 'root',
-    group => 'wheel',
-    mode => '0644',
+    owner   => 'root',
+    group   => 'wheel',
+    mode    => '0644',
   }
 
-  exec { "set hostname":
-    path => ['/bin'],
-    command => "hostname ${fqdn}",
-    subscribe => File['hostname'],
+  exec { 'set hostname':
+    path        => ['/bin'],
+    command     => "hostname ${fqdn}",
+    subscribe   => File['hostname'],
     refreshonly => true,
   }
 }

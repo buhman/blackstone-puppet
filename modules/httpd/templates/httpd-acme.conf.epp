@@ -1,0 +1,12 @@
+<%- | String $host | -%>
+
+server "<%= $host %>" {
+	listen on * port 80
+	location "/.well-known/acme-challenge/*" {
+		root "/acme"
+		request strip 2
+	}
+	location * {
+                block return 404
+	}
+}
