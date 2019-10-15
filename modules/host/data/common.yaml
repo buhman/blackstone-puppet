@@ -1,0 +1,6 @@
+---
+host::hostname: '%{facts.hostname}'
+host::domain: 'rv.buhman.org'
+host::root_hash: '$2b$08$Di9nH4nzLoUTlifZkybXFeQ0pSoZbtMI2NgHg9tTqBrKpVHZRoF4K'
+host::buhman_hash: '$2b$08$V9A0G2OIOw6d5MgCSotAZOK3.PNHwxp7Lnf4mvbI4oGk2ffsJ7LTS'
+host::buhman_key: 'AAAAC3NzaC1lZDI1NTE5AAAAIBNxbP3w+6nVrF2w+XpUVuu+ZonA+DGGGChKFpLmyu3d'

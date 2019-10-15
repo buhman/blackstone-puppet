@@ -1,0 +1,11 @@
+---
+network::inet_mask: '255.255.0.0'
+network::inet_brd: '172.31.255.255'
+network::inet_gate: '172.31.255.254'
+network::inet6_prefixlen: '64'
+network::inet6_gate: 'fe80::b675:eff:fe69:36a2'
+network::ula_prefixlen: '64'
+network::domain: 'rv.buhman.org'
+network::nameservers:
+  - '172.31.255.254'
+  - 'fdf9:6705:ec28::1'
