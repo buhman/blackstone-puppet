@@ -1,5 +1,6 @@
 class profile::mailserver {
-  include httpd::acme
+  include acme::certificate
   include httpd::service
-  include acme::client
+  include rspamd
+  include smtpd
 }

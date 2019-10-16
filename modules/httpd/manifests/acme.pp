@@ -4,4 +4,6 @@ class httpd::acme (
   file { '/etc/httpd.conf':
     content => epp("${module_name}/httpd-acme.conf.epp", { 'host' => $host })
   }
+
+  Class['httpd::acme'] ~> Class['httpd::service']
 }

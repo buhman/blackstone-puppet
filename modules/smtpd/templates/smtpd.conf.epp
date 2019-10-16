@@ -1,0 +1,36 @@
+<%- |
+  String $mail_domain,
+| -%>
+
+pki <%= $mail_domain %> cert "/etc/ssl/<%= $mail_domain %>.fullchain.pem"
+pki <%= $mail_domain %> key "/etc/ssl/private/<%= $mail_domain %>.key"
+
+filter check_dyndns phase connect match rdns regex { '.*\.dyn\..*', '.*\.dsl\..*' } \
+    disconnect "550 no residential connections"
+
+#filter check_rdns phase connect match !rdns \
+#    disconnect "550 no rDNS is so 80s"
+
+#filter check_fcrdns phase connect match !fcrdns \
+#    disconnect "550 no FCrDNS is so 80s"
+
+filter senderscore \
+    proc-exec "filter-senderscore -junkBelow 70 -slowFactor 5000"
+
+filter rspamd proc-exec "filter-rspamd"
+
+table aliases file:/etc/mail/aliases
+
+listen on all tls pki <%= $mail_domain %> \
+    filter { check_dyndns, senderscore, rspamd } # check_rdns, check_fcrdns
+
+listen on all port submission tls-require pki <%= $mail_domain %> auth filter rspamd
+
+action "local_mail" maildir junk alias <aliases>
+action "outbound" relay helo <%= $mail_domain %>
+
+match from any for domain "<%= $mail_domain %>" action "local_mail"
+match for local action "local_mail"
+
+match from any auth for any action "outbound"
+match for any action "outbound"

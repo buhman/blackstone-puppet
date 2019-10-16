@@ -10,15 +10,3 @@ global : {
   external-dir : ["/etc/puppetlabs/facter/external"]
 }
 EOF
-
-REPO="${PWD}/blackwater-puppet"
-
-rsync \
-  --rsync-path=/usr/bin/openrsync \
-  -arv "$REPO" buhman@blackwater.lan:~
-
-puppet apply \
-  --modulepath="${REPO}/modules" \
-  --codedir="${REPO}/code" \
-  --environment=rv \
-  "${REPO}/code/environments/rv/manifests/site.pp"

@@ -1,0 +1,14 @@
+<%- |
+  String $dkim_host,
+  String $dkim_selector,
+  String $hostname,
+| -%>
+
+allow_username_mismatch = true;
+
+domain {
+    <%= dkim_host %> {
+        path = "/etc/mail/dkim/<%= $hostname %>.cat.key";
+        selector = "<%= $dkim_selector %>";
+    }
+}

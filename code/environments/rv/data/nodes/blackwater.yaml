@@ -1,11 +1,17 @@
 ---
+mail_domain: 'rv.buhman.org'
+
 # network
 network::inet_addr: '172.31.1.1'
 network::inet6_addr: '2601:646:8281:8140::fffe:1'
 network::ula_addr: 'fdf9:6705:ec28::fffe:1'
 
-# httpd
-httpd::acme::host: 'rv.buhman.org'
-
 # acme
-acme::client::host: 'rv.buhman.org'
+acme::certificate::host: "%{lookup('mail_domain')}"
+
+# rspamd
+rspamd::install::dkim_host: "%{lookup('mail_domain')}"
+rspamd::install::dkim_selector: 'blackwater-f7b8'
+
+# smtpd
+smtpd::mail_domain: "%{lookup('mail_domain')}"
